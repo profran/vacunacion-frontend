@@ -1,11 +1,8 @@
+import { BASE_URL, TOKEN_AUTH_ENDPOINT, TOKEN_VERIFICATION_ENDPOINT } from './urls'
+
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
-
-const BASE_URL = '';
-const TOKEN_AUTH_ENDPOINT = '';
-const TOKEN_VERIFICATION_ENDPOINT = '';
-
 
 export function requestLogin(credentials) {
     return {
@@ -30,7 +27,7 @@ export function loginFailure(message) {
         type: LOGIN_FAILURE,
         isFetching: false,
         isAuthenticaded: false,
-        message
+        error: message
     }
 }
 
@@ -92,12 +89,11 @@ function verifyFailure(message) {
         type: VERIFY_TOKEN_FAILURE,
         isFetching: false,
         isAuthenticated: false,
-        message
+        error: message
     }
 }
 
 export function verifyToken(token) {
-
     let config = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
