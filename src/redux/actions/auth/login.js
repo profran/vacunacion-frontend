@@ -1,11 +1,8 @@
+import { BASE_URL, TOKEN_AUTH_ENDPOINT, TOKEN_VERIFICATION_ENDPOINT } from './urls'
+
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
-
-const BASE_URL = '';
-const TOKEN_AUTH_ENDPOINT = '';
-const TOKEN_VERIFICATION_ENDPOINT = '';
-
 
 export function requestLogin(credentials) {
     return {
@@ -25,12 +22,12 @@ export function receiveLogin(response) {
     }
 }
 
-export function loginFailure(response) {
+export function loginFailure(message) {
     return {
         type: LOGIN_FAILURE,
         isFetching: false,
         isAuthenticaded: false,
-        response
+        error: message
     }
 }
 
@@ -40,7 +37,7 @@ export function loginUser(creds) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-            username: creds.user,
+            username: creds.username,
             password: creds.password
         })
     }
@@ -52,6 +49,7 @@ export function loginUser(creds) {
             .then(response =>
                 response.json().then(json => ({ json, response }))
             ).then(({ json, response }) => {
+                console.log(response)
                 if (!response.ok) {
                     dispatch(loginFailure(json))
                     return Promise.reject(json)
@@ -59,7 +57,10 @@ export function loginUser(creds) {
                     localStorage.setItem('token', json.token)
                     dispatch(receiveLogin(json))
                 }
-            }).catch(err => console.log("Error: ", err))
+            }).catch(err => {
+                console.log("Error: ", err);
+                dispatch(loginFailure(err))
+            });
     }
 }
 
@@ -83,17 +84,16 @@ function receiveVerifyTokenSuccess() {
     }
 }
 
-function verifyError(message) {
+function verifyFailure(message) {
     return {
         type: VERIFY_TOKEN_FAILURE,
         isFetching: false,
         isAuthenticated: false,
-        message
+        error: message
     }
 }
 
 export function verifyToken(token) {
-
     let config = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -109,12 +109,15 @@ export function verifyToken(token) {
                 response.json().then(json => ({ json, response }))
             ).then(({ json, response }) => {
                 if (!response.ok) {
-                    dispatch(verifyError(json))
+                    dispatch(verifyFailure(json))
                     return Promise.reject(json)
                 } else {
                     dispatch(receiveVerifyTokenSuccess())
                 }
-            }).catch(err => console.log("Error: ", err))
+            }).catch(err => {
+                console.log("Error: ", err);
+                dispatch(verifyFailure(err));
+            });
     }
 }
 

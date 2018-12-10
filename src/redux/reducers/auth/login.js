@@ -7,9 +7,9 @@ import {
     VERIFY_TOKEN_FAILURE,
     LOGOUT_REQUEST,
     LOGOUT_SUCCESS
-} from '../../actions/auth';
+} from '../../actions/auth/login';
 
-export function authReducer(state = {
+export function login(state = {
     isFetching: false,
     isAuthenticated: false
 }, action) {

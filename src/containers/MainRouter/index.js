@@ -16,7 +16,7 @@ const MainRouter = (props) => (
 );
 
 function mapStateToProps(state) {
-    return { isAuthenticated: state.authReducer.isAuthenticated }
+    return { isAuthenticated: state.login.isAuthenticated }
 }
 
 export default connect(mapStateToProps)(MainRouter);
