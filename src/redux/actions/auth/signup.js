@@ -28,7 +28,7 @@ export function signUpUser(data) {
     let config = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ data })
+        body: JSON.stringify(data)
     }
 
     return dispatch => {
@@ -81,7 +81,7 @@ export function signUpMedic(data) {
     let config = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ data })
+        body: JSON.stringify(data)
     }
 
     return dispatch => {
@@ -102,6 +102,5 @@ export function signUpMedic(data) {
                 console.log("Error: ", err);
                 dispatch(signupMedicFailure(err));
             });
-
     }
 }
