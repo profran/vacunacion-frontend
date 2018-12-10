@@ -25,12 +25,12 @@ export function receiveLogin(response) {
     }
 }
 
-export function loginFailure(response) {
+export function loginFailure(message) {
     return {
         type: LOGIN_FAILURE,
         isFetching: false,
         isAuthenticaded: false,
-        response
+        message
     }
 }
 
@@ -52,6 +52,7 @@ export function loginUser(creds) {
             .then(response =>
                 response.json().then(json => ({ json, response }))
             ).then(({ json, response }) => {
+                console.log(response)
                 if (!response.ok) {
                     dispatch(loginFailure(json))
                     return Promise.reject(json)
@@ -59,7 +60,10 @@ export function loginUser(creds) {
                     localStorage.setItem('token', json.token)
                     dispatch(receiveLogin(json))
                 }
-            }).catch(err => console.log("Error: ", err))
+            }).catch(err => {
+                console.log("Error: ", err);
+                dispatch(loginFailure(err))
+            });
     }
 }
 
@@ -83,7 +87,7 @@ function receiveVerifyTokenSuccess() {
     }
 }
 
-function verifyError(message) {
+function verifyFailure(message) {
     return {
         type: VERIFY_TOKEN_FAILURE,
         isFetching: false,
@@ -109,12 +113,15 @@ export function verifyToken(token) {
                 response.json().then(json => ({ json, response }))
             ).then(({ json, response }) => {
                 if (!response.ok) {
-                    dispatch(verifyError(json))
+                    dispatch(verifyFailure(json))
                     return Promise.reject(json)
                 } else {
                     dispatch(receiveVerifyTokenSuccess())
                 }
-            }).catch(err => console.log("Error: ", err))
+            }).catch(err => {
+                console.log("Error: ", err);
+                dispatch(verifyFailure(err));
+            });
     }
 }
 
