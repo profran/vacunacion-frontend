@@ -2,8 +2,7 @@ import React from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Login from '../../scenes/Login';
-
-const Home = () => (<h1>/home</h1>);
+import Home from '../../scenes/Home';
 
 const MainRouter = (props) => (
     <BrowserRouter>
@@ -16,7 +15,7 @@ const MainRouter = (props) => (
 );
 
 function mapStateToProps(state) {
-    return { isAuthenticated: state.login.isAuthenticated }
+    return { isAuthenticated: true }
 }
 
 export default connect(mapStateToProps)(MainRouter);
