@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Login from '../../scenes/Login';
+import SignUp from '../../scenes/SignUp';
 import Home from '../../scenes/Home';
 
 const MainRouter = (props) => (
@@ -9,6 +10,7 @@ const MainRouter = (props) => (
         <Switch>
             <Route exact path='/' render={() => (props.isAuthenticated ? <Redirect to='/home' /> : <Redirect to='/login' />)} />
             <Route path='/login' component={Login} />
+            <Route path='/signup' component={SignUp} />
             <Route path='/home' render={() => (props.isAuthenticated ? <Home /> : <Redirect to='/login' />)} />
         </Switch>
     </BrowserRouter>

@@ -33,7 +33,7 @@ export function signUpUser(data) {
 
     return dispatch => {
 
-        dispatch(requestUserSignup);
+        dispatch(requestUserSignup(data));
 
         return fetch(BASE_URL + SIGN_UP_USER_ENDPOINT, config)
             .then(response =>
