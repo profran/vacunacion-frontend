@@ -40,7 +40,6 @@ export function signUpUser(data) {
                 response.json().then(json => ({ json, response }))
             ).then(({ json, response }) => {
                 if (!response.ok) {
-                    dispatch(signupUserFailure(json))
                     return Promise.reject(json)
                 } else {
                     dispatch(receiveUserSignup())
