@@ -24,7 +24,7 @@ class SigUpForm extends Component {
 
     handle_signup = (e, creds) => {
         this.props.signUpUser({
-            username: md5(creds.username),
+            username: creds.username,
             password: md5(creds.password),
             name: creds.name,
             last_name: creds.last_name,
@@ -37,7 +37,6 @@ class SigUpForm extends Component {
             <div>
                 <input name="username" type="text" placeholder="Username" onChange={this.handle_change} />
                 <input name="name" type="text" placeholder="Name" onChange={this.handle_change} />
-                <input name="last_name" type="text" placeholder="Last name" onChange={this.handle_change} />
                 <input name="dni" type="text" placeholder="DNI" onChange={this.handle_change} />
                 <input name="password" type="password" placeholder="Password" onChange={this.handle_change} />
                 <button onClick={e => this.handle_signup(e, this.state)}>Login</button>
