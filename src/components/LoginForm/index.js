@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { loginUser } from '../../redux/actions/auth/login';
 
+const md5 = require('md5');
+
 class LoginForm extends Component {
     constructor(props) {
         super(props);
@@ -24,13 +26,16 @@ class LoginForm extends Component {
     };
 
     handle_login = (e, creds) => {
-        this.props.loginUser(creds);
+        this.props.loginUser({
+            username: md5(creds.username),
+            password: md5(creds.password)
+        });
     }
 
     render() {
         return (
             <div>
-                <input name="username" type="text" placeholder="Email" onChange={this.handle_change} />
+                <input name="username" type="text" placeholder="Username" onChange={this.handle_change} />
                 <input name="password" type="password" placeholder="Password" onChange={this.handle_change} />
                 <button onClick={e => this.handle_login(e, this.state)}>Login</button>
             </div>
