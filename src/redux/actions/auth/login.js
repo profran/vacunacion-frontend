@@ -38,7 +38,7 @@ export function loginUser(creds) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
             username: creds.username,
-            password: creds.password
+            passwordHash: creds.password
         })
     }
 

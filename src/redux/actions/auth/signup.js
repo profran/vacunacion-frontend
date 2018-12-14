@@ -42,6 +42,7 @@ export function signUpUser(data) {
                 if (!response.ok) {
                     return Promise.reject(json)
                 } else {
+                    console.log(json)
                     dispatch(receiveUserSignup())
                 }
             }).catch(err => {
