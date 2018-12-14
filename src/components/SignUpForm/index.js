@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { signUpUser } from '../../redux/actions/auth/signup';
 
+import './styles.scss';
+
 const md5 = require('md5');
 
 class SigUpForm extends Component {
@@ -25,7 +27,7 @@ class SigUpForm extends Component {
     handle_signup = (e, creds) => {
         this.props.signUpUser({
             username: creds.username,
-            password: md5(creds.password),
+            passwordHash: md5(creds.password),
             name: creds.name,
             last_name: creds.last_name,
             dni: creds.dni
@@ -34,7 +36,7 @@ class SigUpForm extends Component {
 
     render() {
         return (
-            <div>
+            <div className='signup-form'>
                 <input name="username" type="text" placeholder="Username" onChange={this.handle_change} />
                 <input name="name" type="text" placeholder="Name" onChange={this.handle_change} />
                 <input name="dni" type="text" placeholder="DNI" onChange={this.handle_change} />

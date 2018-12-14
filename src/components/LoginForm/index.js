@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { loginUser } from '../../redux/actions/auth/login';
 
+import './styles.scss';
+
 const md5 = require('md5');
 
 class LoginForm extends Component {
@@ -27,17 +29,17 @@ class LoginForm extends Component {
 
     handle_login = (e, creds) => {
         this.props.loginUser({
-            username: md5(creds.username),
+            username: creds.username,
             password: md5(creds.password)
         });
     }
 
     render() {
         return (
-            <div>
-                <input name="username" type="text" placeholder="Username" onChange={this.handle_change} />
-                <input name="password" type="password" placeholder="Password" onChange={this.handle_change} />
-                <button onClick={e => this.handle_login(e, this.state)}>Login</button>
+            <div className='login-form'>
+                <input name="username" type="text" placeholder="Usuario" onChange={this.handle_change} />
+                <input name="password" type="password" placeholder="Contraseña" onChange={this.handle_change} />
+                <button onClick={e => this.handle_login(e, this.state)}>Iniciar sesion</button>
             </div>
         );
     }
